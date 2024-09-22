@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     default: APP_TITLE,
     template: `%s | ${APP_TITLE}`,
   },
-  description: "Acme - Simple auth with lucia and trpc",
+  description: "Rentkar - Simple rent tracking app for tenants",
   icons: [{ rel: "icon", url: "/icon.png" }],
 };
 

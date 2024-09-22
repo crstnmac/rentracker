@@ -17,40 +17,33 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { toast } from "sonner";
+import { useOptimisticProperties } from "./use-optimistic-properties";
 
-interface PostCardProps {
-  post: RouterOutputs["post"]["myPosts"][number];
-  userName?: string;
-  setOptimisticPosts: (action: {
-    action: "add" | "delete" | "update";
-    post: RouterOutputs["post"]["myPosts"][number];
-  }) => void;
+interface PropertyCardProps {
+  property: RouterOutputs["property"]["myProperties"][number];
 }
 
-export const PostCard = ({
-  post,
-  userName,
-  setOptimisticPosts,
-}: PostCardProps) => {
+export const PropertyCard = ({ property }: PropertyCardProps) => {
   const router = useRouter();
-  const postMutation = api.post.delete.useMutation();
+  const postMutation = api.property.delete.useMutation();
   const [isDeletePending, startDeleteTransition] = React.useTransition();
+
+  const {setOptimisticProperties} = useOptimisticProperties()
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="line-clamp-2 text-base">{post.title}</CardTitle>
+        <CardTitle className="line-clamp-2 text-base">{property.title}</CardTitle>
         <CardDescription className="line-clamp-1 text-sm" suppressHydrationWarning>
-          {userName ? <span>{userName} at</span> : null}
-          {post.createdAt.toLocaleDateString(undefined, {
+          {property.createdAt?.toLocaleDateString(undefined, {
             dateStyle: "medium",
           })}
         </CardDescription>
       </CardHeader>
-      <CardContent className="line-clamp-3 text-sm">{post.excerpt}</CardContent>
+      <CardContent className="line-clamp-3 text-sm">{property.description}</CardContent>
       <CardFooter className="flex-row-reverse gap-2">
         <Button variant="secondary" size="sm" asChild>
-          <Link href={`/editor/${post.id}`}>
+          <Link href={`/property/${property.id}`}>
             <Pencil2Icon className="mr-1 h-4 w-4" />
             <span>Edit</span>
           </Link>
@@ -62,20 +55,20 @@ export const PostCard = ({
           onClick={() => {
             startDeleteTransition(async () => {
               await postMutation.mutateAsync(
-                { id: post.id },
+                { id: property.id },
                 {
                   onSettled: () => {
-                    setOptimisticPosts({
+                    setOptimisticProperties({
                       action: "delete",
-                      post,
+                      property,
                     });
                   },
                   onSuccess: () => {
-                    toast.success("Post deleted");
+                    toast.success("Property deleted");
                     router.refresh();
                   },
                   onError: () => {
-                    toast.error("Failed to delete post");
+                    toast.error("Failed to delete property");
                   },
                 },
               );
@@ -87,7 +80,7 @@ export const PostCard = ({
           <span className="sr-only">Delete</span>
         </Button>
         <Badge variant="outline" className="mr-auto rounded-lg capitalize">
-          {post.status} Post
+          {property.status} Property
         </Badge>
       </CardFooter>
     </Card>

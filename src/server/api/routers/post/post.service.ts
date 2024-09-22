@@ -81,5 +81,6 @@ export const myPosts = async (ctx: ProtectedTRPCContext, input: MyPostsInput) =>
       status: true,
       createdAt: true,
     },
+    with: { user: { columns: { email: true } } },
   });
 };

@@ -2,26 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FileTextIcon, CreditCard, GearIcon } from "@/components/icons";
+import { CreditCard, GearIcon } from "@/components/icons";
 
 import { cn } from "@/lib/utils";
+import { CardStackIcon, PersonIcon } from "@radix-ui/react-icons";
 
 const items = [
   {
-    title: "Posts",
-    href: "/dashboard",
-    icon: FileTextIcon,
-  },
-
-  {
-    title: "Billing",
-    href: "/dashboard/billing",
-    icon: CreditCard,
+    title: "Properties",
+    href: "/dashboard/properties",
+    icon: CardStackIcon,
   },
   {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: GearIcon,
+    title: "Tenants",
+    href: "/dashboard/tenants",
+    icon: PersonIcon,
   },
 ];
 

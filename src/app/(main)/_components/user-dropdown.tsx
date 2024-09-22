@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+
 import {
   DropdownMenu,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -42,7 +41,7 @@ export const UserDropdown = ({
       <DropdownMenuTrigger className={className}>
         {/* eslint @next/next/no-img-element:off */}
         <img
-          src={avatar ?? "https://source.boringavatars.com/marble/60/" + email}
+          src="https://api.dicebear.com/9.x/notionists-neutral/svg?seed=Bella&flip=true"
           alt="Avatar"
           className="block h-8 w-8 rounded-full leading-none"
           width={64}
@@ -50,27 +49,16 @@ export const UserDropdown = ({
         ></img>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel className="text-muted-foreground">
-          {email}
-        </DropdownMenuLabel>
+        <DropdownMenuLabel className="text-muted-foreground">{email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem
-            className="cursor-pointer text-muted-foreground"
-            asChild
-          >
+          <DropdownMenuItem className="cursor-pointer text-muted-foreground" asChild>
             <Link href="/dashboard">Dashboard</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer text-muted-foreground"
-            asChild
-          >
+          <DropdownMenuItem className="cursor-pointer text-muted-foreground" asChild>
             <Link href="/dashboard/billing">Billing</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer text-muted-foreground"
-            asChild
-          >
+          <DropdownMenuItem className="cursor-pointer text-muted-foreground" asChild>
             <Link href="/dashboard/settings">Settings</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
@@ -96,9 +84,7 @@ const SignoutConfirmation = () => {
     } catch (error) {
       if (error instanceof Error) {
         toast(error.message, {
-          icon: (
-            <ExclamationTriangleIcon className="h-4 w-4 text-destructive" />
-          ),
+          icon: <ExclamationTriangleIcon className="h-4 w-4 text-destructive" />,
         });
       }
     } finally {
@@ -117,12 +103,8 @@ const SignoutConfirmation = () => {
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-xs">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-center">
-            Sign out from {APP_TITLE}?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            You will be redirected to the home page.
-          </AlertDialogDescription>
+          <AlertDialogTitle className="text-center">Sign out from {APP_TITLE}?</AlertDialogTitle>
+          <AlertDialogDescription>You will be redirected to the home page.</AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-center">
           <Button variant="outline" onClick={() => setOpen(false)}>

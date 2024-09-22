@@ -8,6 +8,7 @@ import { PostsSkeleton } from "./_components/posts-skeleton";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { Paths } from "@/lib/constants";
 import { myPostsSchema } from "@/server/api/routers/post/post.input";
+import { Properties } from "./properties/components/properties";
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 interface Props {
-  searchParams: Record<string, string | string[] | undefined>;
+  readonly searchParams: Record<string, string | string[] | undefined>;
 }
 
 export default async function DashboardPage({ searchParams }: Props) {
@@ -32,18 +33,18 @@ export default async function DashboardPage({ searchParams }: Props) {
    * @see https://nextjs.org/docs/app/building-your-application/data-fetching/patterns#parallel-data-fetching
    */
   const promises = Promise.all([
-    api.post.myPosts.query({ page, perPage }),
+    api.property.myProperties.query({ page, perPage }),
     api.stripe.getPlan.query(),
   ]);
 
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold md:text-4xl">Posts</h1>
-        <p className="text-sm text-muted-foreground">Manage your posts here</p>
+        <h1 className="text-3xl font-bold md:text-4xl">Properties</h1>
+        <p className="text-sm text-muted-foreground">Manage your properties here</p>
       </div>
       <React.Suspense fallback={<PostsSkeleton />}>
-        <Posts promises={promises} />
+        <Properties promises={promises} />
       </React.Suspense>
     </div>
   );
